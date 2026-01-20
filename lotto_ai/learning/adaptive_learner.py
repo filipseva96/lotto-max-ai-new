@@ -5,6 +5,12 @@ Implements Thompson Sampling for multi-armed bandit problem
 import sqlite3
 import numpy as np
 from datetime import datetime
+from pathlib import Path
+import sys
+
+# FIX: Add parent to path
+sys.path.insert(0, str(Path(__file__).parent.parent.parent))
+
 from lotto_ai.config import DB_PATH
 from lotto_ai.tracking.prediction_tracker import PredictionTracker
 

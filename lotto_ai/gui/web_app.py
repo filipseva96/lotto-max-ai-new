@@ -6,19 +6,35 @@ import streamlit as st
 import sys
 import os
 from datetime import datetime
+from pathlib import Path
 
-# Add parent directory to path
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+# FIX: Add project root to Python path
+PROJECT_ROOT = Path(__file__).parent.parent.parent
+sys.path.insert(0, str(PROJECT_ROOT))
 
-from scraper.scrape_lotto_max import main as scrape_data
-from features.features import build_feature_matrix
-from pipelines.predict_and_track import (
-    get_next_draw_date,
-    PredictionTracker,
-    AdaptiveLearner,
+# Now import with full paths
+from lotto_ai.scraper.scrape_lotto_max import main as scrape_data
+from lotto_ai.features.features import build_feature_matrix
+from lotto_ai.tracking.prediction_tracker import PredictionTracker
+from lotto_ai.learning.adaptive_learner import AdaptiveLearner
+from lotto_ai.models.production_model import (
     generate_adaptive_portfolio,
     portfolio_statistics
 )
+
+def get_next_draw_date():
+    """Calculate next draw date (Tuesday or Friday)"""
+    from datetime import datetime, timedelta
+    today = datetime.now()
+    days_ahead = 0
+    
+    while True:
+        days_ahead += 1
+        next_date = today + timedelta(days=days_ahead)
+        if next_date.weekday() in [1, 4]:  # Tuesday or Friday
+            return next_date.strftime('%Y-%m-%d')
+
+# ... rest of the file stays the same (keep all the Streamlit UI code)
 
 # Page config
 st.set_page_config(

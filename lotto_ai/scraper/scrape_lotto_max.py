@@ -4,6 +4,11 @@ import os
 from bs4 import BeautifulSoup
 from datetime import datetime, timedelta
 from dateutil.rrule import rrule, WEEKLY, TU, FR
+from pathlib import Path
+
+# FIX: Use relative path for Streamlit Cloud
+import sys
+sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
 from lotto_ai.config import DB_PATH
 BASE_URL = "https://loteries.lotoquebec.com/en/lotteries/lotto-max-resultats"

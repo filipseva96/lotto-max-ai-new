@@ -1,6 +1,12 @@
 import sqlite3
 import pandas as pd
-from lotto_ai.config import DB_PATH
+from pathlib import Path
+import sys
+
+# FIX: Add parent to path
+sys.path.insert(0, str(Path(__file__).parent.parent.parent))
+
+from lotto_ai.config import DB_PATH, DATA_DIR
 
 NUMBERS = range(1, 51)
 
